@@ -1,0 +1,39 @@
+Protocole d'Expérimentation pour Comparer les Métriques de Logs d'Intégration Continue
+
+Objectif :
+Comparer l'efficacité et la précision de la nouvelle métrique proposée pour l'analyse de logs d'intégration continue avec d'autres métriques existantes.
+
+Étapes :
+
+1. Préparation des Données :
+
+a. Jeu de Données : Utilisation du jeu de données fourni, comprenant des fichiers de logs d'intégration continue.
+
+b. Extraction des Lignes Appariées : Étant donné que l'objectif est de comparer les changements entre les logs, on va extraire les paires de lignes correspondantes 
+entre deux versions successives des fichiers de log.
+
+c. Annotation des Lignes Appariées : Une fois l'extraction fait, on va les annoter en trois catégories : lignes égales, strictement différentes et modifiées.
+
+2. Métriques à Évaluer :
+
+a. Nouvelle Métrique :
+
+b. Métriques Existantes : Identification d'au moins deux autres métriques déjà établies pour la comparaison.
+
+3. Méthodologie d'Évaluation :
+
+a. Paramètres d'Évaluation : Différence entre la sortie de la métrique et la valeure annotée
+
+b. Implémentation : Mettez en œuvre un processus automatisé pour appliquer les différentes métriques aux paires de lignes extraites des logs et pour mesurer 
+leurs performances selon les critères définis.
+
+4. Analyse et Interprétation des Résultats :
+
+a. Comparaison des Résultats : Comparaison des performances des différentes métriques en utilisant les critères définis précédemment.
+
+b. Visualisation des Résultats : Utilisation de graphiques, de tableaux ou d'autres moyens visuels pour illustrer et comparer les performances des métriques.
+
+5. Conclusion :
+
+a. Interprétation des Résultats : Analyse des différences de performance entre la nouvelle métrique et les métriques existantes. Identification des points forts et des limites
+ de chaque métrique.
