@@ -16,9 +16,9 @@ c. Annotation des Lignes Appariées : Une fois l'extraction fait, on va les anno
 
 2. Métriques à Évaluer :
 
-a. Nouvelle Métrique :
+a. Nouvelle Métrique : cidiff
 
-b. Métriques Existantes : Identification d'au moins deux autres métriques déjà établies pour la comparaison.
+b. Métriques Existantes : Identification d'environ neuf deux autres métriques déjà établies pour la comparaison.
 
 3. Méthodologie d'Évaluation :
 
