@@ -23,14 +23,46 @@ def get_random_line_pairs(root_folder, n_pairs):
                             i = random.randint(0, min(len(lines_success), len(lines_failure)))
                             #try to get ith line of success and failure log and if fails do nothing
                             try:
-                                line_success = lines_success[i]
-                                line_failure = lines_failure[i]
-                                line_pairs.append([line_success, line_failure])
+                                line_success = remove_backslash_n(lines_success[i])
+                                line_failure = remove_backslash_n(lines_failure[i])
+                                line_pairs.append([root, line_success, line_failure])
                                 n_pairs -= 1
                             except:
                                 pass
+    
+    return random.shuffle(line_pairs)
 
-    return line_pairs 
+def remove_backslash_n(line):
+    return line.replace("\n", "")
+
+
+def remove_stamp(line):
+    return line.split("]")[1]
+
+
+def highlight_diff(str1, str2):
+    if str1 == str2:
+        return str1, str2
+    
+    highlighted_str1 = ''
+    highlighted_str2 = ''
+    
+    for char1, char2 in zip(str1, str2):
+        if char1 == char2:
+            highlighted_str1 += char1
+            highlighted_str2 += char2
+        else:
+            highlighted_str1 += f"\033[94m{char1}\033[0m"
+            highlighted_str2 += f"\033[94m{char2}\033[0m"
+    
+    if len(str1) > len(str2):
+        highlighted_str1 += f"\033[94m{str1[len(str2):]}\033[0m"
+    elif len(str2) > len(str1):
+        highlighted_str2 += f"\033[94m{str2[len(str1):]}\033[0m"
+    
+    
+    return highlighted_str1, highlighted_str2
+
 
 # Function to get user annotation
 def get_annotation():
@@ -49,7 +81,9 @@ def get_annotation():
 if __name__ == "__main__":
 
     data_folder = "dataset"
-    n_pairs = 5
+    n_pairs = 10
+    # n_equals, n_different, n_modified = 129, 129, 129
+    n_equals, n_different, n_modified = 2, 2, 2
     pairs = get_random_line_pairs(data_folder, n_pairs)
 
     print(len(pairs), "pairs of lines randomly selected.")
@@ -60,13 +94,29 @@ if __name__ == "__main__":
     #Writing line pairs and annotations in the CSV file
     with open(csv_file, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['line', 'line2', 'annotation'])
-        for pair in pairs:
-            print("First line:", pair[0])
-            print("Second line:", pair[1])
+        writer.writerow(['path', 'line', 'line2', 'annotation'])
+        i = 0
+        #for pair in pairs:
+        while (n_equals > 0 or n_different > 0 or n_modified > 0) and i < len(pairs):
+            f_line, s_line = highlight_diff(pairs[i][1], pairs[i][2])
+            print("1st line:", f_line)
+            print("2nd line:", s_line)
             annotation = get_annotation()
-            writer.writerow([pair[0], pair[1], annotation])
-            print("Annotation saved :", annotation)
-            print("------")
+            if annotation == '1' and n_equals > 0:
+                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], annotation])
+                print("Annotation saved :", annotation)
+                print("------")
+                n_equals -= 1
+            elif annotation == '2' and n_different > 0:
+                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], annotation])
+                print("Annotation saved :", annotation)
+                print("------")
+                n_different -= 1
+            elif annotation == '3' and n_modified > 0:
+                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], annotation])
+                print("Annotation saved :", annotation)
+                print("------")
+                n_modified -= 1
+            i += 1
 
     print(f"Annotations saved in file {csv_file}.")
