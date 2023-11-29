@@ -1,11 +1,11 @@
 import os
 import random
 import csv
+from remove_stamp import remove_stamp
 
 # Function to get random line pairs
-def get_random_line_pairs(root_folder, n_pairs):
+def get_random_line_pairs(root_folder, n_pairs, remove_stamp=False):
     line_pairs = []
-
     # Exploring folders and files
     for root, dirs, files in os.walk(root_folder):
         for file in files:
@@ -23,8 +23,11 @@ def get_random_line_pairs(root_folder, n_pairs):
                             i = random.randint(0, min(len(lines_success), len(lines_failure)))
                             #try to get ith line of success and failure log and if fails do nothing
                             try:
-                                line_success = remove_backslash_n(lines_success[i])
-                                line_failure = remove_backslash_n(lines_failure[i])
+                                line_success = remove_backslash_n_and_coma(lines_success[i])
+                                line_failure = remove_backslash_n_and_coma(lines_failure[i])
+                                if remove_stamp:
+                                    line_success = remove_stamp(line_success)
+                                    line_failure = remove_stamp(line_failure)
                                 line_pairs.append([root, line_success, line_failure])
                                 n_pairs -= 1
                             except:
@@ -32,12 +35,8 @@ def get_random_line_pairs(root_folder, n_pairs):
     
     return random.shuffle(line_pairs)
 
-def remove_backslash_n(line):
-    return line.replace("\n", "")
-
-
-def remove_stamp(line):
-    return line.split("]")[1]
+def remove_backslash_n_and_coma(line):
+    return line.replace("\n", "").replace(",", "")
 
 
 def highlight_diff(str1, str2):
@@ -80,7 +79,7 @@ def get_annotation():
 
 if __name__ == "__main__":
 
-    data_folder = "dataset"
+    data_folder = "../dataset"
     n_pairs = 10
     # n_equals, n_different, n_modified = 129, 129, 129
     n_equals, n_different, n_modified = 2, 2, 2
