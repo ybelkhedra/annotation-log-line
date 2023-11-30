@@ -1,6 +1,7 @@
 import os
 import random
 import csv
+import sys
 from remove_stamp import remove_stamp
 
 # Function to get random line pairs
@@ -69,8 +70,9 @@ def get_annotation():
     print("1. Same")
     print("2. Strictly different")
     print("3. Modified")
+    # print("4. Save and quit")
     while True:
-        choice = input("Your choice (1/2/3) : ")
+        choice = input("Your choice (1/2/3): ")
         if choice in ['1', '2', '3']:
             return choice
         else:
@@ -79,10 +81,30 @@ def get_annotation():
 
 if __name__ == "__main__":
 
-    data_folder = "../dataset"
-    n_pairs = 10
-    # n_equals, n_different, n_modified = 129, 129, 129
-    n_equals, n_different, n_modified = 2, 2, 2
+    data_folder = "./dataset"
+    
+    if len(sys.argv) == 2:
+        data_folder = sys.argv[1]
+
+    if not os.path.exists(data_folder):
+        print("Usage : python annotate_log_lines.py <data_folder>. Default is './dataset'")
+        print(f"Error : {data_folder} does not exist.")
+        sys.exit(1)
+    
+    n_pairs = 100
+    n_equals, n_different, n_modified = -1, -1, -1
+    # n_equals, n_different, n_modified = 2, 2, 2
+    
+    #ask the user for n_equals, n_different and n_modified
+    print("How many pairs of lines should be labeled equal ?")
+    n_equals = int(input())
+    print("How many pairs of lines should be labeled different ?")
+    n_different = int(input())
+    print("How many pairs of lines should be labeled modified ?")
+    n_modified = int(input())
+    
+    print("Collecting pairs of lines...")
+    
     pairs = get_random_line_pairs(data_folder, n_pairs)
 
     print(len(pairs), "pairs of lines randomly selected.")
@@ -93,7 +115,7 @@ if __name__ == "__main__":
     #Writing line pairs and annotations in the CSV file
     with open(csv_file, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['path', 'line', 'line2', 'annotation'])
+        writer.writerow(['path', 'line1', 'line2', 'annotation'])
         i = 0
         #for pair in pairs:
         while (n_equals > 0 or n_different > 0 or n_modified > 0) and i < len(pairs):

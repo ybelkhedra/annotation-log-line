@@ -17,5 +17,5 @@ def rename_folders(root_folder):
 
 
 if __name__ == "__main__":
-    main_folder = "../dataset/"
+    main_folder = "./dataset/"
     rename_folders(main_folder)
