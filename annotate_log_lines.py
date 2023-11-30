@@ -105,7 +105,15 @@ if __name__ == "__main__":
     
     print("Collecting pairs of lines...")
     
-    pairs = get_random_line_pairs(data_folder, n_pairs)
+    #ask if wants to remove time stamp
+    print("Do you want to remove time stamp ? (y/n)")
+    remove_stamp = input()
+    if remove_stamp == 'y':
+        remove_stamp = True
+    else:
+        remove_stamp = False
+    
+    pairs = get_random_line_pairs(data_folder, n_pairs, remove_stamp=remove_stamp)
 
     print(len(pairs), "pairs of lines randomly selected.")
 
