@@ -20,29 +20,35 @@ if __name__ == "__main__":
     import sys
     from difflib import SequenceMatcher
 
-    if len(sys.argv) != 2:
-        print("Usage : python interrater_reliability.py <csv_file>")
+    if len(sys.argv) != 3:
+        print("Usage : python interrater_reliability.py <csv_file1> <csv_file2>")
         sys.exit(1)
     
-    csv_file = sys.argv[1]
-    if not os.path.exists(csv_file):
-        print(f"Error : {csv_file} does not exist.")
+    csv_file1 = sys.argv[1]
+    csv_file2 = sys.argv[2]
+    if not os.path.exists(csv_file1):
+        print(f"Error : {csv_file1} does not exist.")
+        sys.exit(1)
+    elif not os.path.exists(csv_file2):
+        print(f"Error : {csv_file2} does not exist.")
         sys.exit(1)
 
-    with open(csv_file, mode='r') as file:
+    with open(csv_file1, mode='r') as file:
         reader = csv.reader(file)
         next(reader)
-        y_true = []
-        y_pred = []
+        y_pred1 = []
         for row in reader:
-            y_pred.append(row[3])
-            if SequenceMatcher(None, row[1], row[2]).ratio() == 1:
-                y_true.append(1)
-            elif SequenceMatcher(None, row[1], row[2]).ratio() < 0.5:
-                y_true.append(2)
-            else:
-                y_true.append(3)
+            y_pred1.append(row[3])
+        
+    with open(csv_file2, mode='r') as file:
+        reader = csv.reader(file)
+        next(reader)
+        y_pred2 = []
+        for row in reader:
+            y_pred2.append(row[3])
     
-    y_true = np.array(y_true).astype(int)
-    y_pred = np.array(y_pred).astype(int)
-    print("Cohen's kappa score : ", kappa_score(y_true, y_pred))
+    y_pred1 = np.array(y_pred1).astype(int)
+    y_pred2 = np.array(y_pred2).astype(int)
+
+    assert len(y_pred1) == len(y_pred2), "Error : the two csv files must have the same length."
+    print("Cohen's kappa score : ", kappa_score(y_pred1, y_pred2))
