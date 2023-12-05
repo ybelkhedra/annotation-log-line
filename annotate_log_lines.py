@@ -5,7 +5,7 @@ import sys
 from remove_stamp import remove_stamp
 
 # Function to get random line pairs
-def get_random_line_pairs(root_folder, n_pairs, remove_stamp=False):
+def get_random_line_pairs(root_folder, n_pairs, remove_stamp_bool=False):
     line_pairs = []
     # Exploring folders and files
     for root, dirs, files in os.walk(root_folder):
@@ -26,10 +26,10 @@ def get_random_line_pairs(root_folder, n_pairs, remove_stamp=False):
                             try:
                                 line_success = remove_backslash_n_and_coma(lines_success[i])
                                 line_failure = remove_backslash_n_and_coma(lines_failure[i])
-                                if remove_stamp:
+                                if remove_stamp_bool:
                                     line_success = remove_stamp(line_success)
                                     line_failure = remove_stamp(line_failure)
-                                line_pairs.append([root, line_success, line_failure])
+                                line_pairs.append([root, i, line_success, line_failure])
                                 n_pairs -= 1
                             except:
                                 pass
@@ -107,13 +107,13 @@ if __name__ == "__main__":
     
     #ask if wants to remove time stamp
     print("Do you want to remove time stamp ? (y/n)")
-    remove_stamp = input()
-    if remove_stamp == 'y':
-        remove_stamp = True
+    remove_stamp_bool = input()
+    if remove_stamp_bool == 'y':
+        remove_stamp_bool = True
     else:
-        remove_stamp = False
+        remove_stamp_bool = False
     
-    pairs = get_random_line_pairs(data_folder, n_pairs, remove_stamp=remove_stamp)
+    pairs = get_random_line_pairs(data_folder, n_pairs, remove_stamp_bool=remove_stamp_bool)
 
     print(len(pairs), "pairs of lines randomly selected.")
 
@@ -123,26 +123,26 @@ if __name__ == "__main__":
     #Writing line pairs and annotations in the CSV file
     with open(csv_file, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['path', 'line1', 'line2', 'annotation'])
+        writer.writerow(['path', 'index_line','line1', 'line2', 'annotation'])
         i = 0
         #for pair in pairs:
         while (n_equals > 0 or n_different > 0 or n_modified > 0) and i < len(pairs):
-            f_line, s_line = highlight_diff(pairs[i][1], pairs[i][2])
+            f_line, s_line = highlight_diff(pairs[i][2], pairs[i][3])
             print("1st line:", f_line)
             print("2nd line:", s_line)
             annotation = get_annotation()
             if annotation == '1' and n_equals > 0:
-                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], annotation])
+                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], pairs[i][3], annotation])
                 print("Annotation saved :", annotation)
                 print("------")
                 n_equals -= 1
             elif annotation == '2' and n_different > 0:
-                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], annotation])
+                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], pairs[i][3], annotation])
                 print("Annotation saved :", annotation)
                 print("------")
                 n_different -= 1
             elif annotation == '3' and n_modified > 0:
-                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], annotation])
+                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], pairs[i][3], annotation])
                 print("Annotation saved :", annotation)
                 print("------")
                 n_modified -= 1

@@ -11,7 +11,7 @@ pip install numpy scikit-learn
 
 This tool provides functionality to generate a dataset in CSV format with the following structure:
 ```
-path, line1, number of line 1, line2, number of line3, annotation
+path, index_line, line1, line2, annotation
 ```
 The 'annotation' column comprises numbers 1, 2, 3 indicating 'same', 'modified', and 'strictly different', respectively.
 
