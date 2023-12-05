@@ -22,4 +22,4 @@ if __name__ == "__main__":
             writer = csv.writer(new_file)
             writer.writerow(["path", "line", "line1", "annotation"])
             for row in reader:
-                writer.writerow([row[0], remove_stamp(row[1]), remove_stamp(row[2]), row[3]])
+                writer.writerow([row[0],row[1], remove_stamp(row[2]), remove_stamp(row[3]), row[4]])

@@ -38,14 +38,14 @@ if __name__ == "__main__":
         next(reader)
         y_pred1 = []
         for row in reader:
-            y_pred1.append(row[3])
+            y_pred1.append(row[4])
         
     with open(csv_file2, mode='r') as file:
         reader = csv.reader(file)
         next(reader)
         y_pred2 = []
         for row in reader:
-            y_pred2.append(row[3])
+            y_pred2.append(row[4])
     
     y_pred1 = np.array(y_pred1).astype(int)
     y_pred2 = np.array(y_pred2).astype(int)
