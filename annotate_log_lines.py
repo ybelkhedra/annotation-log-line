@@ -82,12 +82,16 @@ def get_annotation():
 if __name__ == "__main__":
 
     data_folder = "./dataset"
+    csv_file = "annotations.csv"
     
     if len(sys.argv) == 2:
         data_folder = sys.argv[1]
+    elif len(sys.argv) == 3:
+        data_folder = sys.argv[1]
+        csv_file = sys.argv[2]
 
     if not os.path.exists(data_folder):
-        print("Usage : python annotate_log_lines.py <data_folder>. Default is './dataset'")
+        print("Usage : python annotate_log_lines.py <data_folder> (<csv_file>). Default is './dataset' and 'annotations.csv'")
         print(f"Error : {data_folder} does not exist.")
         sys.exit(1)
     
@@ -116,9 +120,6 @@ if __name__ == "__main__":
     pairs = get_random_line_pairs(data_folder, n_pairs, remove_stamp_bool=remove_stamp_bool)
 
     print(len(pairs), "pairs of lines randomly selected.")
-
-    # Creation of a CSV file to save the annotations
-    csv_file = "annotations.csv"
 
     #Writing line pairs and annotations in the CSV file
     with open(csv_file, mode='w', newline='') as file:
