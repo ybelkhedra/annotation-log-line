@@ -20,7 +20,7 @@ if __name__ == "__main__":
         next(reader)
         with open(csv_file[:-4] + "ver2.csv", mode='w') as new_file:
             writer = csv.writer(new_file)
-            writer.writerow(["path", "line", "line1", "annotation"])
+            writer.writerow(["path", "index_line","line1", "line2", "annotation"])
             for row in reader:
                 f_line, s_line = highlight_diff(row[2], row[3])
                 print("1st line:", f_line)
@@ -29,5 +29,5 @@ if __name__ == "__main__":
                 writer.writerow([row[0], row[1], row[2], row[3], annotation])
                 print("Annotation saved :", annotation)
                 print("------")
-        print("New csv file created :", csv_file[:-4] + "_annotated.csv")
+        print("New csv file created :", csv_file[:-4] + "ver2.csv")
 
