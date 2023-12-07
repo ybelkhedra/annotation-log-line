@@ -5,6 +5,9 @@
 Ensure you have the following Python packages installed:
 ```
 pip install numpy scikit-learn
+pip install python-Levenshtein
+pip install py_stringmatching
+pip install jaro-winkler
 ```
 
 ## Creating Annotated Pairs of Lines Dataset
