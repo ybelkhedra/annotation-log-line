@@ -81,6 +81,49 @@ def LCS_str(s1, s2):
     return similarity
 
 
+def cidiff_str(left_line, right_line):
+    TOKEN_SEPARATORS = ' '  # Définir les séparateurs de jetons, si nécessaire
+
+    left_tokens = left_line.strip().split(TOKEN_SEPARATORS)
+    right_tokens = right_line.strip().split(TOKEN_SEPARATORS)
+
+    if len(left_tokens) != len(right_tokens):
+        return 0
+
+    ok = False
+    count = 0
+    for i in range(len(left_tokens)):
+        if left_tokens[i] == right_tokens[i]:
+            count += 1
+            ok = True
+        elif len(left_tokens[i]) == len(right_tokens[i]):
+            count += 0.5
+        elif lcs_length(list(left_tokens[i]), list(right_tokens[i])) >= 2 * max(len(left_tokens[i]), len(right_tokens[i])) / 3:
+            count += 0.5
+
+    if not ok:
+        return 0
+
+    return count / len(left_tokens)
+
+
+def lcs_length(X, Y):
+    m, n = len(X), len(Y)
+    L = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0 or j == 0:
+                L[i][j] = 0
+            elif X[i - 1] == Y[j - 1]:
+                L[i][j] = L[i - 1][j - 1] + 1
+            else:
+                L[i][j] = max(L[i - 1][j], L[i][j - 1])
+
+    return L[m][n]
+
+
+
 if __name__ == "__main__":
     s1, s2 = "aaa", "jjjjjjjjjjjjj"
     s1, s2 = "Hello world", "Hellu world"
@@ -93,3 +136,4 @@ if __name__ == "__main__":
     print("Jaccard distance:", jaccard_str(s1, s2))
     print("Ngram distance:", ngram_str(s1, s2, 3))
     print("LCS distance:", LCS_str(s1, s2))
+    print("CIDiff distance:", cidiff_str(s1, s2))

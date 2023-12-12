@@ -61,4 +61,5 @@ if __name__ == "__main__":
         axs[i//4, i%4].set_title(metric.__name__)
         axs[i//4, i%4].set_xlabel('Predicted')
         axs[i//4, i%4].set_ylabel('Annotation')
+        axs.set_ticklabels(['Negative', 'Positive'])
     plt.show()
