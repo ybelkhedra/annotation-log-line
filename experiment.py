@@ -1,12 +1,13 @@
 import sys
 import os
 import csv
+import pandas as pd
+import numpy as np
 from sklearn.metrics import confusion_matrix
 import seaborn as sn
 import matplotlib.pyplot as plt
-
-
 from metrics import python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str, cidiff_str
+from scores import get_scores
 
 def apply_metric(s1, s2, metric=python_diff_str):
     return metric(s1, s2)
@@ -62,6 +63,18 @@ if __name__ == "__main__":
         axs[i//4, i%4].set_ylabel('Annotation')
         axs[i//4, i%4].set_xticklabels(['Same', 'Modified', 'Different'])
         axs[i//4, i%4].set_yticklabels(['Same', 'Modified', 'Different'])
-    #save the figure
     plt.savefig('fig/confusion_matrix.png')
     plt.show()
+
+    scores = []
+    for i, metric in enumerate(metrics):
+        accuracy, precision, recall, f1 = get_scores(y_annot, y_metric[i])
+        scores.append([metric.__name__, np.round(accuracy,2), np.round(precision, 2), np.round(recall, 2), np.round(f1, 2)])
+    scores = pd.DataFrame(scores, columns=['Metric', 'Accuracy', 'Precision', 'Recall', 'F1'])
+    scores.to_csv('fig/scores.csv', index=False)
+    print(scores)
+    print("Higest F1 score: ", scores.loc[scores['F1'].idxmax()]["Metric"], scores.loc[scores['F1'].idxmax()]["F1"])
+    print("Higest Recall score: ", scores.loc[scores['Recall'].idxmax()]["Metric"], scores.loc[scores['Recall'].idxmax()]["Recall"])
+    print("Higest Precision score: ", scores.loc[scores['Precision'].idxmax()]["Metric"], scores.loc[scores['Precision'].idxmax()]["Precision"])
+    print("Higest Accuracy score: ", scores.loc[scores['Accuracy'].idxmax()]["Metric"], scores.loc[scores['Accuracy'].idxmax()]["Accuracy"])
+    
