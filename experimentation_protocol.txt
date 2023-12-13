@@ -1,7 +1,7 @@
 Protocole d'Expérimentation pour Comparer les Métriques de Logs d'Intégration Continue
 
 Objectif :
-Comparer l'efficacité et la précision de la nouvelle métrique proposée pour l'analyse de logs d'intégration continue avec d'autres métriques existantes.
+Comparer l'efficacité et la précision de la métrique "Cidiff" proposée pour l'analyse de logs d'intégration continue avec d'autres métriques déjà existantes.
 
 Étapes :
 

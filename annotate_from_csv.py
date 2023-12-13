@@ -29,5 +29,5 @@ if __name__ == "__main__":
                 writer.writerow([row[0], row[1], row[2], row[3], annotation])
                 print("Annotation saved :", annotation)
                 print("------")
-        print("New csv file created :", csv_file[:-4] + "ver2.csv")
+        print("New csv file created :", csv_file[:-4] + "_ver2.csv")
 

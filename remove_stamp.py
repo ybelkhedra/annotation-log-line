@@ -3,7 +3,10 @@ import sys
 import csv
 
 def remove_stamp(line):
-    return line[29:]
+    l = line.split(" ")
+    if len(l) < 2 or l[0] == '' or (len(l) == 2 and l[1] == ''): #if line is empty or only contains a time stamp
+        return line
+    return " ".join(l[1:])
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -20,6 +23,6 @@ if __name__ == "__main__":
         next(reader)
         with open(csv_file[:-4] + "_no_stamp.csv", mode='w') as new_file:
             writer = csv.writer(new_file)
-            writer.writerow(["path", "line", "line1", "annotation"])
+            writer.writerow(["path", "index_line", "line1", "line2", "annotation"])
             for row in reader:
                 writer.writerow([row[0],row[1], remove_stamp(row[2]), remove_stamp(row[3]), row[4]])

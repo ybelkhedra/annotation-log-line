@@ -23,7 +23,7 @@ def choose_class_from_score(score):
 
 if __name__ == "__main__":
     # metrics = [python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
-    metrics = [python_diff_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
+    metrics = [python_diff_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str, cidiff_str]
     csv_file = "annotations.csv"
     if len(sys.argv) == 2:
         csv_file = sys.argv[1]
@@ -60,5 +60,8 @@ if __name__ == "__main__":
         axs[i//4, i%4].set_title(metric.__name__)
         axs[i//4, i%4].set_xlabel('Predicted')
         axs[i//4, i%4].set_ylabel('Annotation')
-        axs.set_ticklabels(['Negative', 'Positive'])
+        axs[i//4, i%4].set_xticklabels(['Same', 'Modified', 'Different'])
+        axs[i//4, i%4].set_yticklabels(['Same', 'Modified', 'Different'])
+    #save the figure
+    plt.savefig('fig/confusion_matrix.png')
     plt.show()
