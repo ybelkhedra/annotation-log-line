@@ -70,13 +70,14 @@ def get_annotation():
     print("1. Same")
     print("2. Strictly different")
     print("3. Modified")
-    # print("4. Save and quit")
+    print("4. Pass")
+    print("5. Save and Exit")
     while True:
-        choice = input("Your choice (1/2/3): ")
-        if choice in ['1', '2', '3']:
+        choice = input("Your choice (1/2/3/4/5): ")
+        if choice in ['1', '2', '3', '4', '5']:
             return choice
         else:
-            print("Please enter 1, 2 or 3.")
+            print("Please choose a valid answer.")
 
 
 if __name__ == "__main__":
@@ -147,6 +148,10 @@ if __name__ == "__main__":
                 print("Annotation saved :", annotation)
                 print("------")
                 n_modified -= 1
+            elif annotation == '4':
+                print("------")
+            elif annotation == '5':
+                break
             i += 1
 
     print(f"Annotations saved in file {csv_file}.")

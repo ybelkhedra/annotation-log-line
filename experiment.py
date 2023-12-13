@@ -6,7 +6,7 @@ import seaborn as sn
 import matplotlib.pyplot as plt
 
 
-from metrics import python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str
+from metrics import python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str, cidiff_str
 
 def apply_metric(s1, s2, metric=python_diff_str):
     return metric(s1, s2)
@@ -22,15 +22,14 @@ def choose_class_from_score(score):
 
 
 if __name__ == "__main__":
-    metrics = [python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
+    # metrics = [python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
+    metrics = [python_diff_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
     csv_file = "annotations.csv"
     if len(sys.argv) == 2:
         csv_file = sys.argv[1]
-    elif len(sys.argv) > 2:
-        print("Usage: python3 annotate_log_lines.py [csv_file]. Default is 'annotations.csv'")
-        exit(1)
     
     if not os.path.exists(csv_file):
+        print(f"Usage: python3 annotate_log_lines.py [csv_file]. Default is 'annotations.csv'")
         print(f"Error: {csv_file} does not exist.")
         exit(1)
 
