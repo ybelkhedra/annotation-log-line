@@ -22,7 +22,7 @@ The 'annotation' column comprises numbers 1, 2, 3 indicating 'same', 'modified',
 
 Usage:
 ```bash
-python3 annotate_log_lines.py <data_folder>
+python3 annotate_log_lines.py <data_folder> <csv_file>
 ```
 Where `<data_folder>` should contain 'failure.log' and 'success.log' files. Subfolders can exist before these files as long as they conclude with 'failure.log' and 'success.log'.
 

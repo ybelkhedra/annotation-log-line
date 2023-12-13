@@ -92,7 +92,7 @@ if __name__ == "__main__":
         csv_file = sys.argv[2]
 
     if not os.path.exists(data_folder):
-        print("Usage : python annotate_log_lines.py <data_folder> (<csv_file>). Default is './dataset' and 'annotations.csv'")
+        print("Usage : python3 annotate_log_lines.py <data_folder> (<csv_file>). Default is './dataset' and 'annotations.csv'")
         print(f"Error : {data_folder} does not exist.")
         sys.exit(1)
     
