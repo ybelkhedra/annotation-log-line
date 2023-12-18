@@ -18,7 +18,7 @@ This tool provides functionality to generate a dataset in CSV format with the fo
 ```
 path, index_line, line1, line2, annotation
 ```
-The 'annotation' column comprises numbers 1, 2, 3 indicating 'same', 'modified', and 'strictly different', respectively.
+The 'annotation' column comprises numbers 1, 2, 3 indicating 'same', 'modified', and 'strictly different', respectively. You can also use 4 which means you don't give any class to the pair of lines.
 
 Usage:
 ```bash

@@ -16,15 +16,15 @@ def apply_metric(s1, s2, metric=python_diff_str):
 def choose_class_from_score(score):
     if score == 1:
         return 1
-    elif score < 0.5:
+    elif score > 0.5:
         return 2
-    else: #score between 0.5 and 1
+    else: #score between 0 and 0.5
         return 3
 
 
 if __name__ == "__main__":
     # metrics = [python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
-    metrics = [python_diff_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str, cidiff_str]
+    metrics = [cidiff_str, python_diff_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
     csv_file = "annotations.csv"
     if len(sys.argv) == 2:
         csv_file = sys.argv[1]
@@ -42,10 +42,11 @@ if __name__ == "__main__":
         for row in reader:
             line1 = row[2]
             line2 = row[3]
-            y_annot.append(int(row[4]))
+            ann = int(row[4])
+            y_annot.append(ann)
             for i, metric in enumerate(metrics):
                 score = apply_metric(line1, line2, metric)
-                y_metric[i].append(choose_class_from_score(score))    
+                y_metric[i].append(choose_class_from_score(score))
 
 
     metrics_confusion_matrix = []
@@ -77,4 +78,6 @@ if __name__ == "__main__":
     print("Higest Recall score: ", scores.loc[scores['Recall'].idxmax()]["Metric"], scores.loc[scores['Recall'].idxmax()]["Recall"])
     print("Higest Precision score: ", scores.loc[scores['Precision'].idxmax()]["Metric"], scores.loc[scores['Precision'].idxmax()]["Precision"])
     print("Higest Accuracy score: ", scores.loc[scores['Accuracy'].idxmax()]["Metric"], scores.loc[scores['Accuracy'].idxmax()]["Accuracy"])
+
     
+    # print(scores['Accuracy'].sort_values(ascending=False))
