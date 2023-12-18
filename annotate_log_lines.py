@@ -68,13 +68,14 @@ def highlight_diff(str1, str2):
 def get_annotation():
     print("Choose the annotation for this paired lines :")
     print("1. Same")
-    print("2. Strictly different")
-    print("3. Modified")
-    print("4. Pass")
-    print("5. Save and Exit")
+    print("2. Modified")
+    print("3. Strictly different")
+    print("4. I don't know")
+    print("5. Pass")
+    print("6. Save and Exit")
     while True:
-        choice = input("Your choice (1/2/3/4/5): ")
-        if choice in ['1', '2', '3', '4', '5']:
+        choice = input("Your choice (1/2/3/4/5/6):")
+        if choice in ['1', '2', '3', '4', '5', '6']:
             return choice
         else:
             print("Please choose a valid answer.")
@@ -149,8 +150,12 @@ if __name__ == "__main__":
                 print("------")
                 n_modified -= 1
             elif annotation == '4':
+                writer.writerow([pairs[i][0], pairs[i][1], pairs[i][2], pairs[i][3], annotation])
+                print("Annotation saved :", annotation)
                 print("------")
             elif annotation == '5':
+                print("------")
+            elif annotation == '6':
                 break
             i += 1
 

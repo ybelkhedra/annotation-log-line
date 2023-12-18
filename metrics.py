@@ -136,4 +136,4 @@ if __name__ == "__main__":
     print("Jaccard distance:", jaccard_str(s1, s2))
     print("Ngram distance:", ngram_str(s1, s2, 3))
     print("LCS distance:", LCS_str(s1, s2))
-    print("CIDiff distance:", cidiff_str(s1, s2))
+    print("Cidiff distance:", cidiff_str(s1, s2))
