@@ -45,25 +45,23 @@ def jaccard_str(s1, s2):
     return len(intersection) / len(union)
 
 
-def ngram_str(s1, s2, n=3):
+def ngram_str(s1, s2, n=2):
+
     def generate_ngrams(string, n):
-        return [string[i:i+n] for i in range(len(string)-n+1)]
-    # def generate_ngrams(string, n):
-    #     tokens = string.strip().split(" ")
-    #     if len(tokens) < n:
-    #         return [tokens]
-    #     tokens = [i for i in tokens if i != '']
-    #     return [tokens[i:i+n] for i in range(len(tokens)-n+1)]
+        tokens = string.strip().split(" ")
+        if len(tokens) < n:
+            return [tokens]
+        tokens = [i for i in tokens if i != '']
+        return [tokens[i:i+n] for i in range(len(tokens)-n+1)]
     
     ngrams1 = generate_ngrams(s1, n)
     ngrams2 = generate_ngrams(s2, n)
-    
-    count1 = Counter(ngrams1)
-    count2 = Counter(ngrams2)
-    
-    common_occurrences = sum((count1 & count2).values())
-    
-    similarity = common_occurrences / (len(ngrams1) + len(ngrams2) - common_occurrences)
+
+    similarity = 0
+    for ngram in ngrams1:
+        if ngram in ngrams2:
+            similarity += 1
+    similarity /= max(len(ngrams1), len(ngrams2))
     
     return similarity
 
