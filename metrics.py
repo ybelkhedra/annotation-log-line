@@ -48,6 +48,12 @@ def jaccard_str(s1, s2):
 def ngram_str(s1, s2, n=3):
     def generate_ngrams(string, n):
         return [string[i:i+n] for i in range(len(string)-n+1)]
+    # def generate_ngrams(string, n):
+    #     tokens = string.strip().split(" ")
+    #     if len(tokens) < n:
+    #         return [tokens]
+    #     tokens = [i for i in tokens if i != '']
+    #     return [tokens[i:i+n] for i in range(len(tokens)-n+1)]
     
     ngrams1 = generate_ngrams(s1, n)
     ngrams2 = generate_ngrams(s2, n)
@@ -82,10 +88,12 @@ def LCS_str(s1, s2):
 
 
 def cidiff_str(left_line, right_line):
-    TOKEN_SEPARATORS = ' '  # Définir les séparateurs de jetons, si nécessaire
+    TOKEN_SEPARATORS = ' '
 
     left_tokens = left_line.strip().split(TOKEN_SEPARATORS)
+    left_tokens = [i for i in left_tokens if i != '']
     right_tokens = right_line.strip().split(TOKEN_SEPARATORS)
+    right_tokens = [i for i in right_tokens if i != '']
 
     if len(left_tokens) != len(right_tokens):
         return 0
