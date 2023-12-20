@@ -43,10 +43,11 @@ if __name__ == "__main__":
             line1 = row[2]
             line2 = row[3]
             ann = int(row[4])
-            y_annot.append(ann)
-            for i, metric in enumerate(metrics):
-                score = apply_metric(line1, line2, metric)
-                y_metric[i].append(choose_class_from_score(score))
+            if ann in [1, 2, 3]:
+                y_annot.append(ann)
+                for i, metric in enumerate(metrics):
+                    score = apply_metric(line1, line2, metric)
+                    y_metric[i].append(choose_class_from_score(score))
 
 
     metrics_confusion_matrix = []
