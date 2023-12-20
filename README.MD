@@ -22,9 +22,15 @@ The 'annotation' column comprises numbers 1, 2, 3 indicating 'same', 'modified',
 
 Usage:
 ```bash
-python3 annotate_log_lines.py <data_folder> <csv_file>
+python3 annotate_log_lines.py -d <data_folder> -f <csv_file> -n <number>
 ```
-Where `<data_folder>` should contain 'failure.log' and 'success.log' files. Subfolders can exist before these files as long as they conclude with 'failure.log' and 'success.log'.
+
+Where `<data_folder>` should contain 'failure.log' and 'success.log' files. Subfolders can exist before these files as long as they conclude with 'failure.log' and 'success.log'. `<csv_file>` is the csv where you want to save your data and `<number>` the number of lines you want to sample.
+
+You can use for more help:
+```bash
+python3 annotate_log_lines.py -h
+```
 
 ⚠️ Be cautious with folder names containing commas, as this might affect the CSV output. Use the 'rename_folders.py' script to recursively remove commas from folder names:
 ```bash

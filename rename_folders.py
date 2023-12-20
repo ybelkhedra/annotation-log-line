@@ -1,5 +1,5 @@
 import os
-
+import sys
 
 def rename_folders(root_folder):
     for root, dirs, files in os.walk(root_folder, topdown=False):
@@ -18,4 +18,13 @@ def rename_folders(root_folder):
 
 if __name__ == "__main__":
     main_folder = "./dataset/"
+
+    if len(sys.argv) == 2:
+        main_folder = sys.argv[1]
+
+    if not os.path.exists(main_folder):
+        print(f"Usage: python3 rename_folders.py [main_folder]. Default is './dataset/'")
+        print(f"Error: {main_folder} does not exist.")
+        exit(1)
+    
     rename_folders(main_folder)

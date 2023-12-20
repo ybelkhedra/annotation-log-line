@@ -2,6 +2,7 @@ import os
 import random
 import csv
 import sys
+import argparse
 from remove_stamp import remove_stamp
 
 # Function to get random line pairs
@@ -83,23 +84,16 @@ def get_annotation():
 
 if __name__ == "__main__":
 
-    data_folder = "./dataset"
-    csv_file = "annotations.csv"
-    
-    if len(sys.argv) == 2:
-        data_folder = sys.argv[1]
-    elif len(sys.argv) == 3:
-        data_folder = sys.argv[1]
-        csv_file = sys.argv[2]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--n_pairs", type=int, default=100, help="number of pairs of line to sample on")
+    parser.add_argument("-d", "--data_dir", type=str, default="./dataset", help="path of the directory containing the dataset")
+    parser.add_argument("-f", "--csv_file", type=str, default="annotations.csv", help="path of the csv file to save the annotations")
+    args = parser.parse_args()
+    data_folder = args.data_dir
+    csv_file = args.csv_file
+    n_pairs = args.n_pairs
 
-    if not os.path.exists(data_folder):
-        print("Usage : python3 annotate_log_lines.py <data_folder> (<csv_file>). Default is './dataset' and 'annotations.csv'")
-        print(f"Error : {data_folder} does not exist.")
-        sys.exit(1)
-    
-    n_pairs = 100
     n_equals, n_different, n_modified = -1, -1, -1
-    # n_equals, n_different, n_modified = 2, 2, 2
     
     #ask the user for n_equals, n_different and n_modified
     print("How many pairs of lines should be labeled equal ?")
@@ -108,10 +102,12 @@ if __name__ == "__main__":
     n_different = int(input())
     print("How many pairs of lines should be labeled modified ?")
     n_modified = int(input())
+
+    assert n_equals + n_different + n_modified <= n_pairs, "The sum of n_equals, n_different and n_modified should be less than n_pairs."
     
     print("Collecting pairs of lines...")
     
-    #ask if wants to remove time stamp
+    #ask if user wants to remove time stamp
     print("Do you want to remove time stamp ? (y/n)")
     remove_stamp_bool = input()
     if remove_stamp_bool == 'y':
