@@ -14,6 +14,10 @@ def python_diff_str(s1, s2):
 
 def cosine_similarity_str(s1, s2):
     corpus = [s1, s2]
+    if (len(s1) < 2 or len(s2) < 2) and s1 == s2:
+        return 1
+    elif len(s1) < 2 or len(s2) < 2:
+        return 0
     
     vectorizer = TfidfVectorizer()
     X = vectorizer.fit_transform(corpus)
@@ -49,9 +53,9 @@ def ngram_str(s1, s2, n=2):
 
     def generate_ngrams(string, n):
         tokens = string.strip().split(" ")
+        tokens = [i for i in tokens if i != '']
         if len(tokens) < n:
             return [tokens]
-        tokens = [i for i in tokens if i != '']
         return [tokens[i:i+n] for i in range(len(tokens)-n+1)]
     
     ngrams1 = generate_ngrams(s1, n)
@@ -66,21 +70,26 @@ def ngram_str(s1, s2, n=2):
     return similarity
 
 
-def LCS_str(s1, s2):
-    m, n = len(s1), len(s2)
-    
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
-    
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if s1[i - 1] == s2[j - 1]:
-                dp[i][j] = dp[i - 1][j - 1] + 1
+def lcs_length(X, Y):
+    m, n = len(X), len(Y)
+    L = [[0] * (n + 1) for _ in range(m + 1)]
+
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if i == 0 or j == 0:
+                L[i][j] = 0
+            elif X[i - 1] == Y[j - 1]:
+                L[i][j] = L[i - 1][j - 1] + 1
             else:
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                L[i][j] = max(L[i - 1][j], L[i][j - 1])
+
+    return L[m][n]
+
+def LCS_str(s1, s2):
     
-    lcs_length = dp[m][n]
+    lcs_l = lcs_length(s1, s2)
     
-    similarity = lcs_length / max(len(s1), len(s2))
+    similarity = lcs_l / max(len(s1), len(s2))
     
     return similarity
 
@@ -111,23 +120,6 @@ def cidiff_str(left_line, right_line):
         return 0
 
     return count / len(left_tokens)
-
-
-def lcs_length(X, Y):
-    m, n = len(X), len(Y)
-    L = [[0] * (n + 1) for _ in range(m + 1)]
-
-    for i in range(m + 1):
-        for j in range(n + 1):
-            if i == 0 or j == 0:
-                L[i][j] = 0
-            elif X[i - 1] == Y[j - 1]:
-                L[i][j] = L[i - 1][j - 1] + 1
-            else:
-                L[i][j] = max(L[i - 1][j], L[i][j - 1])
-
-    return L[m][n]
-
 
 
 if __name__ == "__main__":

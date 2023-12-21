@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.metrics import confusion_matrix
 import seaborn as sn
 import matplotlib.pyplot as plt
-from metrics import python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str, cidiff_str
+from metrics import python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str, cidiff_str, LCS_str
 from scores import get_scores
 
 def apply_metric(s1, s2, metric=python_diff_str):
@@ -24,7 +24,7 @@ def choose_class_from_score(score):
 
 if __name__ == "__main__":
     # metrics = [python_diff_str, cosine_similarity_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
-    metrics = [cidiff_str, python_diff_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str]
+    metrics = [cidiff_str, python_diff_str, levenshtein_distance_str, SmithWaterman_str, MongeElkan_str, jarowinkler_str, jaccard_str, ngram_str, LCS_str, cosine_similarity_str]
     csv_file = "annotations.csv"
     if len(sys.argv) == 2:
         csv_file = sys.argv[1]
@@ -57,14 +57,14 @@ if __name__ == "__main__":
         metrics_confusion_matrix.append(cm)
     
     #plot the confusion matrix with seaborn
-    fig, axs = plt.subplots(2, 4, figsize=(20, 10))
+    fig, axs = plt.subplots(2, 5, figsize=(20, 10))
     for i, metric in enumerate(metrics):
-        sn.heatmap(metrics_confusion_matrix[i], annot=True, ax=axs[i//4, i%4], fmt='g', square=True, cmap='Blues', cbar=False)
-        axs[i//4, i%4].set_title(metric.__name__)
-        axs[i//4, i%4].set_xlabel('Predicted')
-        axs[i//4, i%4].set_ylabel('Annotation')
-        axs[i//4, i%4].set_xticklabels(['Same', 'Modified', 'Different'])
-        axs[i//4, i%4].set_yticklabels(['Same', 'Modified', 'Different'])
+        sn.heatmap(metrics_confusion_matrix[i], annot=True, ax=axs[i//5, i%5], fmt='g', square=True, cmap='Blues', cbar=False)
+        axs[i//5, i%5].set_title(metric.__name__)
+        axs[i//5, i%5].set_xlabel('Predicted')
+        axs[i//5, i%5].set_ylabel('Annotation')
+        axs[i//5, i%5].set_xticklabels(['Same', 'Modified', 'Different'])
+        axs[i//5, i%5].set_yticklabels(['Same', 'Modified', 'Different'])
     plt.savefig('fig/confusion_matrix.png')
     plt.show()
 
