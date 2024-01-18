@@ -1,0 +1,144 @@
+\newif\ifinria
+\def\ptitle{Comparaison de métriques de similarité pour la détection de différences dans les logs d'intégration continue} % Title
+\def\pauthor{Yamine Belkhedra} % Author
+\def\padvisors{Nicolas Hubner} % Advisors
+\def\pteam{PROGRESS} % Team
+\def\pinstitute{Enseirb-Matmeca, LaBRI, France} % Affiliation
+\def\pdate{Jeudi 25 Avril 2024} % Date
+\inriatrue % inriatrue/inriafalse to enable/disable Inria logo
+
+\input{boilerplateSDSLaBRI}
+
+\graphicspath{{./fig/}} % Figures and logos directory
+\setlength{\columnheight}{588ex} % Tweak this value if columns are too long/short (should be okay with 588ex)
+\newcommand{\pname}{\textsc{Priva-Stream}\xspace} % For demonstration purpose only
+
+\begin{document}
+\begin{frame}
+  \begin{columns}
+    \begin{column}{.49\textwidth}
+      \begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
+        \begin{minipage}[T]{.95\textwidth}
+          \parbox[t][\columnheight]{\textwidth}{
+            
+            \begin{block}{Video content consumption}
+            
+            \centering
+            
+            \includegraphics[width=.925\textwidth]{sample/cisco-vni-2021.png}            
+            
+            \end{block}
+            
+            \vfill
+            
+            \begin{block}{Content Delivery Networks (CDN)}
+            
+            \centering
+            
+            \includegraphics[width=.33\textwidth]{sample/CDN.png}
+            
+            \end{block}
+            
+            \vfill
+            
+            \begin{block}{HTTP Adaptive Streaming (HAS)}
+            
+            \centering
+            
+            \includegraphics[width=.925\textwidth]{sample/DASH-2.png}
+            
+            \end{block}
+            
+            \vfill
+            
+            \begin{block}{MS-Stream: Multi-Source Streaming over HTTP}
+            
+            \centering
+            
+            \includegraphics[width=.925\textwidth]{sample/msstream_archi.pdf}
+            
+            \includegraphics[width=.925\textwidth]{sample/chunk2.pdf}
+            
+            \end{block}
+            
+            \vfill
+            
+            \begin{block}{Problem statement}
+            
+            \centering
+            
+            \includegraphics[width=.5\textwidth]{sample/SotA-cropped.pdf}
+            
+            \end{block}
+            
+          }
+        \end{minipage}
+      \end{beamercolorbox}
+    \end{column}
+    \begin{column}{.49\textwidth}
+      \begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
+        \begin{minipage}[T]{.95\textwidth}
+          \parbox[t][\columnheight]{\textwidth}{
+            
+            \begin{block}{\pname idea}
+            
+            \begin{itemize}
+            
+            \item Reliability, QoE and scalability
+            
+            MS-Stream: Multiple-Source adaptive streaming over HTTP
+            
+            \item Incentive to contribute
+            
+            Rewarding: contributing users get a higher quality
+            
+            \item End-users privacy
+            
+            TEE (SGX): encryption, NAT and anonymity
+            
+            \end{itemize}
+            
+            \end{block}
+            
+            \vfill
+            
+            \begin{block}{\pname overview}
+            
+            \centering
+            
+            \includegraphics[width=.925\textwidth]{sample/BP.pdf}
+            
+            \end{block}
+            
+            \vfill
+            
+            \begin{block}{\pname technical description}
+            
+            \centering
+            
+            \includegraphics[width=.8\textwidth]{sample/PS-tech.png}
+            
+            \end{block}
+            
+            \vfill
+            
+            \begin{block}{\pname early results}
+            
+            \centering
+            
+            Experiment: Four clients joining the system sequentially
+            
+            \includegraphics[width=.925\textwidth]{sample/startup.pdf}
+            
+            Startup delay (s) - MS-Stream (top) vs \pname (bottom)
+            
+            \end{block}
+            
+          }
+        \end{minipage}
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+  \vskip1ex
+\end{frame}
+\end{document}

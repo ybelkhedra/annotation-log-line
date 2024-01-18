@@ -1,0 +1,21 @@
+\pdfobjcompresslevel=0
+\documentclass[final,hyperref={pdfpagelabels=false}]{beamer}
+\usepackage[orientation=portrait,size=a0,scale=1.4]{beamerposter}
+\usepackage[utf8]{inputenc}
+% \usepackage[sfdefault]{roboto}
+\usepackage[english]{babel}
+\usepackage{amsmath, amsthm, amssymb, array, booktabs, grffile, latexsym, tabularx, xspace}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+\newcommand{\pphantom}{\textcolor{ta3aluminium}}
+\newlength{\columnheight}
+
+\def\plogo{logo/logo_em.jpg}
+\def\purl{https://github.com/ybelkhedra/annotation-log-line/}
+
+\mode<presentation>{\usetheme{SDSLaBRI}}
+\title[\ptitle]{\texorpdfstring{\huge \ptitle}{\ptitle}}
+\author[\pauthor]{\pauthor\ -\ \padvisors}
+\institute[\pinstitute]{\pteam\ -\ \pinstitute}
+\date[\pdate]{\pdate}
+\setlogo{\plogo}
+\setauthorurl{\purl}

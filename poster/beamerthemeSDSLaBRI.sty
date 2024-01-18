@@ -1,0 +1,135 @@
+\ProvidesPackage{beamerthemeSDSLaBRI}
+\mode<presentation>
+
+\pgfmathsetmacro\bleuLaBRIR{32/255}
+\pgfmathsetmacro\bleuLaBRIG{50/255}
+\pgfmathsetmacro\bleuLaBRIB{142/255}
+\pgfmathsetmacro\rougeLaBRIR{227/255}
+\pgfmathsetmacro\rougeLaBRIG{27/255}
+\pgfmathsetmacro\rougeLaBRIB{39/255}
+\definecolor{bleuLaBRI}{rgb}{\bleuLaBRIR,\bleuLaBRIG,\bleuLaBRIB}
+\definecolor{rougeLaBRI}{rgb}{\rougeLaBRIR,\rougeLaBRIG,\rougeLaBRIB}
+
+\setbeamerfont{footline}{size=\large,series=\tt}
+\setbeamerfont{block title}{size=\large,series=\bf}
+
+\setbeamercolor{background canvas}{bg=bleuLaBRI!5}
+\setbeamercolor{headline}{bg=white,fg=rougeLaBRI}
+\setbeamercolor{footline}{bg=white,fg=rougeLaBRI}
+\setbeamercolor{separation line}{bg=bleuLaBRI}
+\setbeamercolor{framesubtitle}{fg=bleuLaBRI, bg=rougeLaBRI}
+\setbeamercolor{title in head/foot}{fg=black, bg=white}
+\setbeamercolor{author in head/foot}{fg=rougeLaBRI, bg=white}
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{block title}{fg=white,bg=bleuLaBRI}
+\setbeamercolor{block body}{fg=black, bg=white}
+\setbeamercolor{block alerted title}{fg=white,bg=bleuLaBRI}
+\setbeamercolor{block alerted body}{fg=rougeLaBRI,bg=white}
+\setbeamercolor{upper separation line head}{fg=bleuLaBRI}
+
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{block begin}{
+  \vskip.75ex
+  \begin{beamercolorbox}[ht=3.5ex,dp=0.5ex,center,leftskip=-1em,colsep*=.75ex]{block title}%
+    \usebeamerfont*{block title}%
+    {\phantom{Gg}\hfill\insertblocktitle\hfill}%
+  \end{beamercolorbox}%
+  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[leftskip=1em,colsep*=.75ex,sep=0.5ex,vmode]{block body}%
+    \ifbeamercolorempty[bg]{block body}{\vskip-.25ex}{\vskip-.75ex}\vbox{}%
+  }
+  \setbeamertemplate{block end}{
+  \end{beamercolorbox}
+}
+
+\def\@logopath{None}
+\newcommand{\setlogo}[1]{\def\@logopath{#1}}
+
+\setbeamertemplate{headline}{  
+  \leavevmode
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line head}
+    \rule{0pt}{16pt}
+  \end{beamercolorbox}
+
+  \begin{beamercolorbox}[wd=\paperwidth]{headline}
+    \begin{columns}[T]
+      \begin{column}{.02\paperwidth}
+      \end{column}
+      \begin{column}{.68\paperwidth}
+        \vskip3.5ex
+        \raggedleft
+        \usebeamercolor{title in headline}{\textbf{\LARGE{\inserttitle}}\\[1ex]}
+        \usebeamercolor{author in headline}{\large{\insertauthor}\\[1ex]}
+        \vskip-0.5ex
+        \usebeamercolor{institute in headline}{\textit{\large{\insertinstitute}}\\[1ex]}     
+      \end{column}
+      \begin{column}{.02\paperwidth}
+      \end{column}
+      \begin{column}{.22\paperwidth}
+        \begin{center}
+          \vskip1ex
+          \includegraphics[width=\textwidth]{\@logopath}
+        \end{center}
+      \end{column}
+      \begin{column}{.02\paperwidth}
+      \end{column}
+    \end{columns}
+    \vskip1ex
+  \end{beamercolorbox}
+
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
+    \rule{0pt}{16pt}
+  \end{beamercolorbox}
+}
+
+\def\@authorurl{None}
+\newcommand{\setauthorurl}[1]{\def\@authorurl{#1}}
+\def\@authoremail{None}
+\newcommand{\setauthoremail}[1]{\def\@authoremail{#1}}
+
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+    \rule{0pt}{16pt}
+  \end{beamercolorbox}
+  \leavevmode%
+  \begin{beamercolorbox}[ht=4ex,leftskip=1.4em,rightskip=1.4em]{author in head/foot}
+    \texttt{\@authorurl\ \ }
+    \hfill
+    \insertshortdate
+    \hfill
+    \texttt{\@authoremail}
+    \vskip1ex
+  \end{beamercolorbox}
+  \vskip0pt
+  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+    \rule{0pt}{16pt}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[ht=4.5em,leftskip=1.4em,rightskip=1.4em]{title in head/foot}
+    \includegraphics[height=4em]{logo/logo_em.jpg}
+    \hfill
+    \includegraphics[height=4em]{logo/logo_LaBRI.png}
+    \hfill
+    {
+    \ifinria
+      \includegraphics[height=4em]{logo/logo_Inria.jpg}
+      \hfill
+    \else
+    \fi
+    }
+    \includegraphics[height=4em]{logo/logo_INP.png}
+    \vskip1ex
+  \end{beamercolorbox}
+  \vskip0pt
+}
+
+\mode<all>
+
+\setbeamertemplate{itemize items}[triangle]
+\setbeamertemplate{itemize item}{\raisebox{0.12ex}{$\blacktriangleright$}\hskip0.1em}
+\setbeamertemplate{itemize subitem}{\raisebox{0.12ex}{$\triangleright$}\hskip0.1em}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
