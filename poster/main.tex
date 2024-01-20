@@ -2,10 +2,10 @@
 \def\ptitle{Comparaison de métriques de similarité pour la détection de différences dans les logs d'intégration continue} % Title
 \def\pauthor{Yamine Belkhedra} % Author
 \def\padvisors{Nicolas Hubner} % Advisors
-\def\pteam{PROGRESS} % Team
-\def\pinstitute{Enseirb-Matmeca, LaBRI, France} % Affiliation
+\def\pteam{Bordeaux INP} % Team
+\def\pinstitute{Enseirb-Matmeca, LaBRI} % Affiliation
 \def\pdate{Jeudi 25 Avril 2024} % Date
-\inriatrue % inriatrue/inriafalse to enable/disable Inria logo
+\inriafalse % inriatrue/inriafalse to enable/disable Inria logo
 
 \input{boilerplateSDSLaBRI}
 
@@ -21,55 +21,83 @@
         \begin{minipage}[T]{.95\textwidth}
           \parbox[t][\columnheight]{\textwidth}{
             
-            \begin{block}{Video content consumption}
+            \begin{block}{Log d'intégration continue}
             
-            \centering
+            Définition : L'\textbf{intégration continue} c'est :
+
+            \begin{itemize}
+              \item une bonne pratique de développement logiciel (devOps) ;
+              \item un processus d'automatisation de l'intégration des changements de code réalisés par plusieurs contributeurs dans un dépôt central ;
+              \item un processus d'automatisation de la construction et des tests de l'application.
+            \end{itemize}
+
+            Les \textbf{logs d'intégration continue} sont des fichiers textes générés par les outils d'intégration continue qui contiennent des informations sur l'état de l'application, du système, du code, des tests...
+
+            % \includegraphics[width=.33\textwidth]{sample/example_log.png}
+
+            \begin{figure}[h!]
+              \centering
+              \includegraphics[width=0.5\textwidth]{sample/example_log.png}
+              \caption{Exemple de logs d'intégration continue}
+              \label{fig:example_log}
+          \end{figure}
+
+            \end{block}
+
             
-            \includegraphics[width=.925\textwidth]{sample/cisco-vni-2021.png}            
+            \vfill
+            
+            \begin{block}{Métriques de similarité}
+            
+            Définition : Une \textbf{métrique de similarité} est une fonction qui mesure la similarité entre deux objets, dans notre cas deux chaînes de caractères.	La valeur peut être comprise entre 0 et 1 :
+            \begin{itemize}
+              \item 0 signifie que les deux chaînes sont complètement différentes ;
+              \item 1 signifie qu'elles sont strictement identiques.
+            \end{itemize}
+
+            Application : Les métriques de similarité sont utilisées dans les outils de gestion de version pour détecter les différences entre deux versions d'un fichier texte, et donc de mettre en évidences des lignes ajoutées, supprimées ou modifiées.
             
             \end{block}
             
             \vfill
             
-            \begin{block}{Content Delivery Networks (CDN)}
+            \begin{block}{Cidiff : métrique développée par le chercheur Nicolas Hubner}
             
-            \centering
-            
-            \includegraphics[width=.33\textwidth]{sample/CDN.png}
+            Objectif : Développer une métrique de similarité spécialisée pour les logs d'intégration continue.
             
             \end{block}
             
             \vfill
             
-            \begin{block}{HTTP Adaptive Streaming (HAS)}
+            \begin{block}{Exemples de métriques et de résultats}
+
+              Texte 1 : \texttt{Mon voisin très malin a justement situé une nouvelle planète.}
+              \newline
+              Texte 2 : \texttt{Mon copain très sympa a justement situé une ancienne exoplanète.}
+              \newline
+              Texte 3 : \texttt{Bonjour le monde !}
+              \newline
+              Texte 4 : \texttt{B0nj0ur l3 m0nd3 ?}
             
-            \centering
-            
-            \includegraphics[width=.925\textwidth]{sample/DASH-2.png}
+              \begin{tabular}{|l|c|c|}
+                \hline
+                \textbf{Métrique} & \textbf{Texte 1 VS Texte 2} & \textbf{Texte 3 VS Texte 4} \\
+                \hline
+                Python diff distance & 0.79 & 0.67 \\
+                Cosine similarity & 0.47 & 0.0 \\
+                Levenshtein distance & 0.72 & 0.67 \\
+                Smith Waterman distance & 0.66 & 0.67 \\
+                Mongel Elkan distance & 0.86 & 0.8 \\
+                Jaro Winkler distance & 0.84 & 0.8 \\
+                Jaccard distance & 0.78 & 0.6 \\
+                Ngram distance & 0.25 & 0.0 \\
+                LCS distance & 0.77 & 0.67 \\
+                Cidiff distance & 0.8 & 0.0 \\
+                \hline
+              \end{tabular}
             
             \end{block}
-            
             \vfill
-            
-            \begin{block}{MS-Stream: Multi-Source Streaming over HTTP}
-            
-            \centering
-            
-            \includegraphics[width=.925\textwidth]{sample/msstream_archi.pdf}
-            
-            \includegraphics[width=.925\textwidth]{sample/chunk2.pdf}
-            
-            \end{block}
-            
-            \vfill
-            
-            \begin{block}{Problem statement}
-            
-            \centering
-            
-            \includegraphics[width=.5\textwidth]{sample/SotA-cropped.pdf}
-            
-            \end{block}
             
           }
         \end{minipage}
@@ -80,21 +108,29 @@
         \begin{minipage}[T]{.95\textwidth}
           \parbox[t][\columnheight]{\textwidth}{
             
-            \begin{block}{\pname idea}
-            
+            \begin{block}{Fonctionnement de Cidiff}
+              
+              Permet de comparer deux chaînes de caractères en :
             \begin{itemize}
+              \item comparant les chaînes de caractères mot à mot pour calculer un score de similarité ;
+              \item attribuant plus ou moins de points selon la ressemblance des mots en utilisant la "longest common subsequence (LCS) distance" ;
+            \end{itemize}
             
-            \item Reliability, QoE and scalability
+            \end{block}
             
-            MS-Stream: Multiple-Source adaptive streaming over HTTP
+            \vfill
             
-            \item Incentive to contribute
+            \begin{block}{Évaluation des performances de Cidiff}
             
-            Rewarding: contributing users get a higher quality
-            
-            \item End-users privacy
-            
-            TEE (SGX): encryption, NAT and anonymity
+            Objectif : Comparer les performances de Cidiff avec d'autres métriques de similarité.
+
+            Protocole :
+            \begin{itemize}
+              \item Utilisation d'un dataset contenant des fichiers de logs d'intégration continue ;
+              \item Création d'un outil d'annotation manuelle de paires de lignes de logs en Python par Yamine Belkhedra ;
+              \item Annotations de paires de ligne de logs par Yamine Belkhedra et Nicolas Hubner ;
+              \item Calcul des scores de similarité entre les paires de lignes de logs annotées ;
+              \item Comparaison des scores de similarité calculés avec les annotations manuelles.
             
             \end{itemize}
             
@@ -102,38 +138,51 @@
             
             \vfill
             
-            \begin{block}{\pname overview}
-            
-            \centering
-            
-            \includegraphics[width=.925\textwidth]{sample/BP.pdf}
+            \begin{block}{Résultats}
+              
+              \centering
+              \begin{tabular}{|l|c|c|c|c|}
+                \hline
+                \textbf{Metric} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+                \hline
+                Cidiff & 0.91 & 0.93 & 0.92 & 0.92 \\
+                Python diff & 0.86 & 0.90 & 0.88 & 0.87 \\
+                Levenshtein distance & 0.83 & 0.88 & 0.86 & 0.85 \\
+                SmithWaterman & 0.86 & 0.90 & 0.88 & 0.87 \\
+                MongeElkan & 0.68 & 0.85 & 0.72 & 0.66 \\
+                Jarowinkler & 0.69 & 0.85 & 0.73 & 0.68 \\
+                Jaccard & 0.82 & 0.88 & 0.84 & 0.83 \\
+                Ngram & 0.86 & 0.91 & 0.88 & 0.87 \\
+                LCS & 0.81 & 0.87 & 0.83 & 0.83 \\
+                Cosine similarity & 0.56 & 0.62 & 0.52 & 0.51 \\
+                \hline
+              \end{tabular}
+              
+              \begin{itemize}
+              \item Meilleur score F1 :  cidiff 0.92
+              \item Meilleur recall :  cidiff 0.92
+              \item Meilleur precision :  cidiff 0.93
+              \item Meilleur accuracy :  cidiff 0.91
+              \end{itemize}
             
             \end{block}
             
             \vfill
             
-            \begin{block}{\pname technical description}
-            
-            \centering
-            
-            \includegraphics[width=.8\textwidth]{sample/PS-tech.png}
+            \begin{block}{Résultats}
+              
+              \centering
+                  \begin{figure}[h!]
+                    \centering
+                    \includegraphics[width=1.0\textwidth]{sample/confusion_matrix.png}
+                    \caption{Matrices de confusion des résultats obtenus pour chaque métrique}
+                    \label{fig:example_log}
+                \end{figure}
             
             \end{block}
             
             \vfill
-            
-            \begin{block}{\pname early results}
-            
-            \centering
-            
-            Experiment: Four clients joining the system sequentially
-            
-            \includegraphics[width=.925\textwidth]{sample/startup.pdf}
-            
-            Startup delay (s) - MS-Stream (top) vs \pname (bottom)
-            
-            \end{block}
-            
+
           }
         \end{minipage}
       \end{beamercolorbox}
